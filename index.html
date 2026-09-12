@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jurassic Isle — Scene 1: The Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="scene">
+    <div id="atmosphere-overlay"></div>
+    <div id="power-flash"></div>
+    <div id="damage-flash"></div>
+    <div id="hud" class="hidden">
+      <span id="hud-title">Jurassic Isle</span>
+      <span id="hud-divider">·</span>
+      <span id="hud-scene">Scene 01</span>
+    </div>
+    <div id="hp-wrap" class="hidden">
+      <span id="hp-label">HP</span>
+      <div id="hp-bar-track"><div id="hp-bar-fill"></div></div>
+    </div>
+    <div id="gate-timer-wrap" class="hidden">
+      <span id="gate-timer-label">EAST GATE FAILURE</span>
+      <span id="gate-timer-value">4:00</span>
+    </div>
+    <button id="map-btn" class="hidden">🗺 Map</button>
+    <button id="radio-icon" class="hidden idle">
+      <span id="radio-icon-symbol">📻</span>
+      <span id="radio-icon-status">STANDBY</span>
+    </button>
+    <div id="radio-call-overlay" class="hidden">
+      <div id="radio-call-screen">
+        <div id="radio-call-static"></div>
+        <div id="radio-call-static2"></div>
+        <div id="radio-call-header">
+          <span class="dot"></span>
+          <span id="radio-call-header-text">INCOMING TRANSMISSION</span>
+        </div>
+        <p id="radio-call-text"></p>
+        <button id="radio-call-close">Close Channel</button>
+      </div>
+    </div>
+    <div id="map-overlay" class="hidden">
+      <div id="map-panel">
+        <div id="map-header">
+          <span id="map-header-dot"></span>
+          <span id="map-header-title">TOUR SURVEILLANCE</span>
+          <span id="map-header-live">LIVE</span>
+        </div>
+        <div id="map-body">
+          <div id="map-view">
+            <div id="map-grid"></div>
+            <div id="map-scanline"></div>
+            <p id="map-banner">TOUR IN PROGRESS</p>
+            <svg id="map-route-svg" viewBox="0 0 260 130" preserveAspectRatio="xMidYMid meet">
+              <path id="map-route-path" d="M40,95 Q130,30 220,60" fill="none" stroke-dasharray="5 5" stroke-width="2"/>
+              <circle id="map-you-dot" cx="40" cy="95" r="7"></circle>
+              <text id="map-you-label" x="40" y="112">YOU ARE HERE</text>
+              <g id="map-dest-marker">
+                <circle cx="220" cy="60" r="7"></circle>
+                <text id="map-dest-label" x="220" y="45" text-anchor="middle"></text>
+              </g>
+            </svg>
+          </div>
+          <div id="map-status">
+            <p id="map-status-title">Vehicle Status</p>
+            <ul id="map-vehicle-status">
+              <li>Vehicle Inspection</li>
+              <li>Radio Check</li>
+              <li>Perimeter Fencing</li>
+              <li>Route Clearance</li>
+            </ul>
+            <p id="map-places-title">Locations</p>
+            <div id="map-route"></div>
+            <button id="map-restricted-btn">🔒 Restricted Area</button>
+            <ul id="map-restricted-list" class="hidden"></ul>
+          </div>
+        </div>
+        <button id="map-close">Close Map</button>
+      </div>
+    </div>
+    <div id="title-screen">
+      <div class="hazard-strip top"></div>
+      <div id="title-content">
+        <p id="pretitle">Prehistory Worldwide presents</p>
+        <h1 id="game-title">JURASSIC ISLE</h1>
+        <p id="game-tagline">A PERFECT DAY</p>
+        <p id="start-prompt">▸ click to begin</p>
+      </div>
+      <div class="hazard-strip bottom"></div>
+    </div>
+    <div id="chapter-card">
+      <div class="letterbox top"></div>
+      <div id="chapter-content">
+        <p id="chapter-num">Scene 01</p>
+        <h2 id="chapter-title">The Invitation</h2>
+        <p id="chapter-location">Darius's Bedroom — Morning</p>
+        <p id="chapter-role">Playing as <span>Darius</span>, aspiring paleontologist</p>
+      </div>
+      <div class="letterbox bottom"></div>
+    </div>
+    <div id="ending-screen" class="hidden">
+      <div class="letterbox top"></div>
+      <div id="ending-content">
+        <p id="ending-eyebrow">JURASSIC ISLE</p>
+        <h1 id="ending-title">THE END</h1>
+        <p id="ending-subtitle">Some perfect day.</p>
+        <button id="ending-restart">Play Again</button>
+      </div>
+      <div class="letterbox bottom"></div>
+    </div>
+    <div id="objective-hint" class="hidden">
+      <span id="objective-label">Objective</span>
+      <span id="objective-text">Something on the desk catches your eye.</span>
+    </div>
+<div id="bg-frame">
+  <img id="bg" src="assets/image.png" alt="">
+<img id="darius-sprite" src="assets/darius.png" alt="Darius">
+<img id="jeep-sprite" class="hidden" src="assets/car.png" alt="">
+<div id="trex-chase-wrap" class="hidden">
+  <img id="trex-chase-sprite" src="assets/run_08.png" alt="">
+</div>
+<div id="threat-meter-wrap" class="hidden">
+  <span id="threat-label">THREAT</span>
+  <div id="threat-bar-track"><div id="threat-bar-fill"></div></div>
+  <span id="threat-mash-hint">MASH E!</span>
+</div>
+<div id="controls-legend" class="hidden">
+  <p><span class="key">E</span> Speed up</p>
+  <p><span class="key">SPACE</span>/<span class="key">W</span> Jump</p>
+  <p><span class="key">A</span>/<span class="key">D</span> Dodge left/right</p>
+  <p><span class="key">X</span> Duck</p>
+</div>
+<div id="chase-formation" class="hidden">
+  <img id="kira-run"   class="run-sprite" src="assets/kira-run.png" alt="Kira">
+  <img id="darius-run" class="run-sprite" src="assets/darius-run.png" alt="Darius">
+  <img id="ace-run"    class="run-sprite" src="assets/ace-run.png" alt="Ace">
+  <img id="esme-run"   class="run-sprite" src="assets/esme-run.png" alt="Esme">
+</div>
+<div id="chase-obstacle" class="hidden"><div class="obstacle-shape"></div></div>
+<div id="obstacle-telegraph" class="hidden"></div>
+<div id="dodge-prompt" class="hidden">
+  <span id="dodge-prompt-text">PRESS E</span>
+  <div id="dodge-timer-bar"><div id="dodge-timer-fill"></div></div>
+</div>
+<div id="streak-popup" class="hidden"></div>
+<img id="raptor-sprite" class="hidden" src="assets/raptor-prowl.png" alt="">
+<img id="raptor-lunge-sprite" class="hidden" src="assets/raptor-lunge.png" alt="">
+<div id="ammo-wrap" class="hidden">
+  <span id="ammo-label">M-99 DARTS</span>
+  <span id="ammo-count">0</span>
+</div>
+<div id="ammo-search-wrap" class="hidden">
+  <div id="ammo-search-hint">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M12 2 L12 16 M6 10 L12 16 L18 10" stroke="#f2a900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Something's rustling in that bush</span>
+  </div>
+  <button id="ammo-search-hotspot" aria-label="Search the bush">
+    <svg viewBox="0 0 18 14" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+      <rect x="1" y="5" width="16" height="9" fill="#1c3a1f"/>
+      <rect x="2" y="2" width="8" height="6" fill="#26481f"/>
+      <rect x="8" y="1" width="9" height="7" fill="#1c3a1f"/>
+      <rect x="0" y="6" width="6" height="6" fill="#284a24"/>
+    </svg>
+  </button>
+</div>
+<img id="pose-sprite" class="hidden" src="" alt="">
+<div id="item-pickup" class="hidden">
+  <img id="item-pickup-icon" src="" alt="">
+  <div class="cartridge-anim">
+    <div class="cartridge"></div>
+  </div>
+  <span id="item-pickup-label"></span>
+</div>
+</div>
+<div id="distortion-overlay">
+  <div class="dist-scanlines"></div>
+  <div class="dist-chroma-r"></div>
+  <div class="dist-chroma-b"></div>
+  <div class="dist-tear"></div>
+</div>
+<button id="scene-continue-btn" class="hidden">Continue ▸</button>
+<button id="skip-btn" class="hidden">Skip ⏭</button>
+<button id="back-btn" class="hidden">⏮ Back</button>
+    <div id="envelope-wrap">
+      <div id="click-hint">
+  <svg id="hint-arrow" viewBox="0 0 24 24" fill="none">
+    <path d="M12 2 L12 16 M6 10 L12 16 L18 10" stroke="#f2a900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span>Click the envelope</span>
+</div>
+      <button id="envelope" aria-label="Open the envelope on the desk">
+        <svg viewBox="0 0 16 12" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <rect x="0"  y="0"  width="16" height="12" fill="#e6d3a3"/>
+          <rect x="0"  y="0"  width="16" height="1"  fill="#2c1c12"/>
+          <rect x="0"  y="11" width="16" height="1"  fill="#2c1c12"/>
+          <rect x="0"  y="0"  width="1"  height="12" fill="#2c1c12"/>
+          <rect x="15" y="0"  width="1"  height="12" fill="#2c1c12"/>
+          <rect x="1"  y="1"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="2"  y="2"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="3"  y="3"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="4"  y="4"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="5"  y="5"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="6"  y="6"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="7"  y="6"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="8"  y="6"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="9"  y="5"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="10" y="4"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="11" y="3"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="12" y="2"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="13" y="1"  width="1"  height="1"  fill="#2c1c12"/>
+          <rect x="7"  y="2"  width="2"  height="1"  fill="#8c2f2f"/>
+        </svg>
+      </button>
+    </div>
+    <div id="journal-search-wrap" class="hidden">
+      <div id="search-click-hint">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2 L12 16 M6 10 L12 16 L18 10" stroke="#f2a900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="search-click-hint-text">Something's buried under those papers</span>
+      </div>
+      <button id="papers-pile" aria-label="Search through the scattered papers">
+        <svg viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <rect x="1" y="6" width="14" height="8" fill="#e8dcb8"/>
+          <rect x="1" y="6" width="14" height="1" fill="#c9b98a"/>
+          <rect x="3" y="3" width="14" height="8" fill="#f0e6c8"/>
+          <rect x="5" y="0" width="14" height="8" fill="#e8dcb8"/>
+          <rect x="6" y="9" width="10" height="1" fill="#8a7a4a"/>
+          <rect x="6" y="11" width="8" height="1" fill="#8a7a4a"/>
+        </svg>
+      </button>
+      <button id="journal-hotspot" class="hidden" aria-label="Open the journal">
+        <svg viewBox="0 0 16 12" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <rect x="0" y="0" width="16" height="12" fill="#3a3128"/>
+          <rect x="0" y="0" width="16" height="1" fill="#1c1810"/>
+          <rect x="0" y="11" width="16" height="1" fill="#1c1810"/>
+          <rect x="1" y="2" width="14" height="1" fill="#5a4e38"/>
+          <rect x="1" y="4" width="10" height="1" fill="#5a4e38"/>
+          <rect x="1" y="6" width="12" height="1" fill="#5a4e38"/>
+          <rect x="1" y="8" width="8" height="1" fill="#5a4e38"/>
+        </svg>
+      </button>
+    </div>
+    <div id="password-wall-wrap" class="hidden">
+      <div id="password-click-hint">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2 L12 16 M6 10 L12 16 L18 10" stroke="#f2a900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Something's scrawled on the wall</span>
+      </div>
+      <button id="password-hotspot" aria-label="Read the writing on the wall">
+        <svg viewBox="0 0 22 10" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <rect x="0" y="2" width="4" height="1" fill="#c9b078"/>
+          <rect x="5" y="1" width="3" height="1" fill="#c9b078"/>
+          <rect x="9" y="3" width="5" height="1" fill="#c9b078"/>
+          <rect x="15" y="2" width="4" height="1" fill="#c9b078"/>
+          <rect x="1" y="6" width="6" height="1" fill="#c9b078"/>
+          <rect x="8" y="7" width="4" height="1" fill="#c9b078"/>
+          <rect x="13" y="6" width="7" height="1" fill="#c9b078"/>
+        </svg>
+      </button>
+    </div>
+    <div id="watch-wrap" class="hidden">
+      <div id="watch-click-hint">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2 L12 16 M6 10 L12 16 L18 10" stroke="#f2a900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>A spare tracker watch, still powered</span>
+      </div>
+      <button id="watch-hotspot" aria-label="Pick up and equip the spare watch">
+        <svg viewBox="0 0 14 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+          <rect x="4" y="0" width="6" height="2" fill="#3a3d3a"/>
+          <rect x="4" y="14" width="6" height="2" fill="#3a3d3a"/>
+          <rect x="2" y="3" width="10" height="10" fill="#4a4e4a"/>
+          <rect x="3" y="4" width="8" height="8" fill="#0e2a1a"/>
+          <rect x="4" y="5" width="6" height="6" fill="#1c4a2c"/>
+          <rect x="5" y="7" width="4" height="1" fill="#7dffa0"/>
+        </svg>
+      </button>
+    </div>
+    <div id="letter-overlay" class="hidden">
+      <div id="letter">
+        <p class="letter-heading">Congratulations, Darius!</p>
+        <p>Your submission, a research paper on craniofacial biting in Tyrannosauridae, has caught the attention of not only the judges at Prehistory Worldwide, but major paleo-enthusiasts and even Jurassic World and its affiliates!</p>
+        <p>As recognition for your work, you've been selected for an exclusive visit to <span class="emph">Jurassic Isle</span>.</p>
+        <p>Experience <span class="emph">The Perfect Day</span>, a once-in-a-lifetime journey through the world's most extraordinary prehistoric attraction.</p>
+        <p class="letter-sign">Your trip awaits.</p>
+        <button id="close-letter">Close invitation</button>
+      </div>
+    </div>
+    <div id="hijack-overlay" class="hidden">
+      <div id="hijack-screen">
+        <div id="hijack-lines"></div>
+        <div id="hijack-fight-wrap">
+          <p id="hijack-fight-label">REGAIN CONTROL</p>
+          <div id="hijack-fight-track"><div id="hijack-fight-fill"></div></div>
+          <p id="hijack-fight-hint">Mash E</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="terminal-overlay" class="hidden">
+      <div id="terminal-screen">
+        <div id="terminal-header">
+          <span id="terminal-title">CONTAINMENT STATUS — AUTHENTICATED</span>
+          <span id="terminal-login">LAST LOGIN: DR. VOSS</span>
+        </div>
+        <div id="terminal-body">
+          <div id="terminal-tabs"></div>
+          <div id="terminal-view"></div>
+          <div id="terminal-legend">
+            <p id="terminal-legend-title">ASSET CODE KEY</p>
+            <ul id="terminal-legend-list"></ul>
+          </div>
+        </div>
+        <button id="code-red-alert" class="hidden">
+          ⚠ CODE RED: PLAN83E7H — UNAUTHORIZED ACCESS DETECTED
+        </button>
+        <button id="comms-log-btn" class="hidden">🔒 Archived Transmission — locked</button>
+        <div id="terminal-bottom-row">
+          <button id="terminal-close">Close Terminal</button>
+        </div>
+      </div>
+      <div id="download-panel" class="hidden">
+        <p id="download-title">DECRYPTING PLAN83E7H</p>
+        <div id="download-bar-track"><div id="download-bar-fill"></div></div>
+        <p id="download-hint">Mash E to force the download</p>
+      </div>
+      <div id="comms-log-panel" class="hidden">
+        <p id="comms-log-heading">[ARCHIVED TRANSMISSION — 3 DAYS AGO]</p>
+        <div id="comms-log-lines"></div>
+        <button id="comms-log-close">Close Log</button>
+      </div>
+    </div>
+    <div id="dialogue-box" class="hidden">
+  <div id="speaker-tag">
+    <img id="speaker-portrait" src="assets/Darius.jpeg" alt="">
+    <p id="speaker-name">Darius</p>
+  </div>
+  <p id="dialogue-text"></p>
+  <div id="continue-indicator">▼</div>
+</div>
+<div id="dialogue-hint" class="hidden">Click anywhere on this box to continue ▼</div>
+    <div id="choice-box" class="hidden">
+      <p id="choice-prompt">What does Darius say?</p>
+      <div id="choice-options"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
